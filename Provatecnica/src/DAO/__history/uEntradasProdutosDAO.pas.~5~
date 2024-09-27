@@ -1,0 +1,89 @@
+unit uEntradasProdutosDAO;
+
+interface
+
+uses
+  FireDAC.Comp.Client, uConexao, uEntradasProdutosModel, System.SysUtils, uSistemaControl;
+
+type
+  TEntradasProdutosDAO = class
+    private
+      FConexao: TConexao;
+    public
+      constructor Create;
+
+      function Incluir(APedidovendaModel: TEntradasProdutosModel): Boolean;
+      function Alterar(APedidovendaModel: TEntradasProdutosModel): Boolean;
+      function Excluir(APedidovendaModel: TEntradasProdutosModel): Boolean;
+      function GetId: Integer;
+      function Obter(AValorpesquisa: string): TFDQuery;
+
+  end;
+
+implementation
+
+{ TEntradasProdutosDAO }
+
+constructor TEntradasProdutosDAO.Create;
+begin
+  FConexao := TSistemaControl.GetInstance().Conexao;
+end;
+
+function TEntradasProdutosDAO.GetId: Integer;
+var
+  vQry: TFDQuery;
+begin
+  vQry := FConexao.CriarQuery();
+  try
+    vQry.Open('SELECT coalesce(MAX(ID),0)+1 AS ID FROM ENTRADAS_PRODUTOS');
+    try
+      Result := vQry.Fields[0].AsInteger;
+    finally
+      vQry.Close;
+    end;
+  finally
+    vQry.Free;
+  end;
+end;
+
+function TEntradasProdutosDAO.Incluir(
+  AEntradasProdutosModel: TEntradasProdutosModel): Boolean;
+var
+  vQry: TFDQuery;
+begin
+  vQry := FConexao.CriarQuery();
+  try
+    vQry.Close;
+    vQry.ExecSQL('insert into ENTRADAS_PRODUTOS (ID, ID_PRODUTO, QUANTIDADE_ENTRADA, VALOR_UNITARIO_COMPRA, VALOR_TOTAL) values (:ID, :NUMPEDI, :DATA_EMISSAO, :COD_CLIENTE, :VALOR_TOTAL)',
+                  [AEntradasProdutosModel.ID,
+                   APedidovendaModel.NUMPEDIDO,
+                   APedidovendaModel.DATAEMISSAO,
+                   APedidovendaModel.CODCLIENTE,
+                   APedidovendaModel.VALORTOTAL]);
+
+    vQry.Connection.Commit;
+
+    Result := True;
+  finally
+    VQry.Free;
+  end;
+end;
+
+function TEntradasProdutosDAO.Alterar(
+  APedidovendaModel: TEntradasProdutosModel): Boolean;
+begin
+
+end;
+
+function TEntradasProdutosDAO.Excluir(
+  APedidovendaModel: TEntradasProdutosModel): Boolean;
+begin
+
+end;
+
+function TEntradasProdutosDAO.Obter(AValorpesquisa: string): TFDQuery;
+begin
+
+end;
+
+end.

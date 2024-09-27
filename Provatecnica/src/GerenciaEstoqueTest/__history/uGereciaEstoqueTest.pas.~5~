@@ -1,0 +1,33 @@
+unit uGereciaEstoqueTest;
+
+interface
+uses
+  DUnitX.TestFramework;
+
+type
+
+  [TestFixture]
+  GerenciaEstoqueTest = class(TObject)
+  private
+    //Cliente: TClienteControl;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+  end;
+
+implementation
+
+procedure GerenciaEstoqueTest.Setup;
+begin
+end;
+
+procedure GerenciaEstoqueTest.TearDown;
+begin
+end;
+
+
+initialization
+  TDUnitX.RegisterTestFixture(GerenciaEstoqueTest);
+end.

@@ -1,0 +1,25 @@
+unit uUsuarioDAO;
+
+interface
+
+uses
+  FireDAC.Comp.Client, uConexao, uUsuarioModel, System.SysUtils, uSistemaControl;
+
+type
+  TUsuarioDAO = class
+    private
+      FConexao: TConexao;
+    public
+      constructor Create;
+
+      function Incluir(AUsuarioModel: TUsuarioModel): Boolean;
+      function Alterar(AUsuarioModel: TUsuarioModel): Boolean;
+      function Excluir(AUsuarioModel: TUsuarioModel): Boolean;
+      function GetId: Integer;
+      function ObterUsuario(AorderBy: Integer;AValorparcial: string): TFDQuery;
+      function ObterCLIByID(AValorpesquisa: string): TFDQuery;
+  end;
+
+implementation
+
+end.

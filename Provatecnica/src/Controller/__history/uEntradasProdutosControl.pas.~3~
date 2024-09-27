@@ -1,0 +1,19 @@
+unit uEntradasProdutosControl;
+
+interface
+
+uses
+  uEntradasProdutosModel, System.SysUtils, FireDAC.Comp.Client;
+
+type
+  TEntradasProdutosControl = class
+    private
+
+    public
+
+
+  end;
+
+implementation
+
+end.

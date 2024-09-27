@@ -1,0 +1,35 @@
+program GerenciaEstoqueTests;
+{
+
+  Delphi DUnit Test Project
+  -------------------------
+  This project contains the DUnit test framework and the GUI/Console test runners.
+  Add "CONSOLE_TESTRUNNER" to the conditional defines entry in the project options
+  to use the console test runner.  Otherwise the GUI test runner will be used by
+  default.
+
+}
+
+{$IFDEF CONSOLE_TESTRUNNER}
+{$APPTYPE CONSOLE}
+{$ENDIF}
+
+uses
+  DUnitTestRunner,
+  TestuClienteControl in 'TestuClienteControl.pas',
+  uClienteControl in '..\Controller\uClienteControl.pas',
+  uClienteModel in '..\Model\uClienteModel.pas',
+  uEnumerado in '..\Model\uEnumerado.pas',
+  uClienteDAO in '..\DAO\uClienteDAO.pas',
+  uConexao in '..\Conexao\uConexao.pas',
+  UConecta in '..\Conexao\UConecta.pas',
+  uSistemaControl in '..\Controller\uSistemaControl.pas',
+  TestuProdutoControl in 'TestuProdutoControl.pas',
+  uProdutoControl in '..\Controller\uProdutoControl.pas';
+
+{$R *.RES}
+
+begin
+  DUnitTestRunner.RunRegisteredTests;
+end.
+

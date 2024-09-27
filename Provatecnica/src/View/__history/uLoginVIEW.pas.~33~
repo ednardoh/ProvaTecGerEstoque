@@ -1,0 +1,157 @@
+unit uLoginVIEW;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxContainer, cxEdit, cxTextEdit, Vcl.Menus,
+  Vcl.StdCtrls, cxButtons, cxLabel, cxImage, Vcl.ExtCtrls, dxGDIPlusClasses,
+  Datasnap.Provider, Data.DB, Datasnap.DBClient, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
+  FireDAC.DApt, FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, FireDAC.Phys.FB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, uUsuarioControl;
+
+type
+  TfrmLogin = class(TForm)
+    EdtUsuario: TcxTextEdit;
+    btnEntrar: TcxButton;
+    btnCancelat: TcxButton;
+    ImgLogin: TImage;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    ds_CadUsuario: TDataSource;
+    TB_Usuario: TClientDataSet;
+    DSP_Usuario: TDataSetProvider;
+    TB_UsuarioID: TIntegerField;
+    TB_UsuarioNOMEUSUARIO: TStringField;
+    TB_UsuarioSENHA: TStringField;
+    EdtSenha: TEdit;
+    procedure btnCancelatClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure EdtUsuarioExit(Sender: TObject);
+    procedure EdtSenhaExit(Sender: TObject);
+    procedure btnEntrarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  private
+    { Private declarations }
+    Usuarios: TUsuarioControl;
+    ixCont: Integer;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmLogin: TfrmLogin;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmLogin.btnCancelatClick(Sender: TObject);
+begin
+  Application.Terminate;
+end;
+
+procedure TfrmLogin.btnEntrarClick(Sender: TObject);
+begin
+  try
+    Usuarios:= TUsuarioControl.Create;
+    DSP_Usuario.DataSet := Usuarios.ObterUsuario(EdtUsuario.Text);
+    TB_Usuario.Close;
+    TB_Usuario.Open;
+    if TB_Usuario.RecordCount = 0 then
+    begin
+      messagedlg('Usuário Não Encontrado!',mtWarning,[mbok],0);
+      EdtUsuario.SetFocus;
+      inc(ixCont);
+    end
+    else
+    begin
+      if EdtSenha.Text <> TB_UsuarioSENHA.AsString then
+      begin
+        messagedlg('Usuário ou Senha Não Confere!',mtWarning,[mbok],0);
+        EdtUsuario.Text :='';
+        EdtSenha.Text :='';
+        EdtUsuario.SetFocus;
+        inc(ixCont);
+        Abort;
+      end
+      else
+        Close;
+    end;
+  finally
+    if ixCont > 3 then
+    begin
+      messagedlg('Usuário Excedeu o Limite de 3 tentativas!',mtWarning,[mbok],0);
+      Application.Terminate;
+    end;
+    Usuarios.Free;
+  end;
+end;
+
+procedure TfrmLogin.EdtSenhaExit(Sender: TObject);
+begin
+  try
+  if EdtSenha.Text = '' then
+  begin
+    messagedlg('Senha não pode ser Nulo!',mtWarning,[mbok],0);
+    EdtUsuario.SetFocus;
+    inc(ixCont);
+    Abort;
+  end
+  else
+    btnEntrarClick(Self);
+  finally
+    if ixCont > 3 then
+    begin
+      messagedlg('Usuário Excedeu o Limite de 3 tentativas!',mtWarning,[mbok],0);
+      Application.Terminate;
+    end;
+  end;
+end;
+
+procedure TfrmLogin.EdtUsuarioExit(Sender: TObject);
+begin
+  try
+  if EdtUsuario.Text = '' then
+  begin
+    messagedlg('Usuário não pode ser Nulo!',mtWarning,[mbok],0);
+    EdtUsuario.SetFocus;
+    inc(ixCont);
+    Abort;
+  end
+  else
+    EdtSenha.SetFocus;
+  finally
+    if ixCont > 3 then
+    begin
+      messagedlg('Usuário Excedeu o Limite de 3 tentativas!',mtWarning,[mbok],0);
+      Application.Terminate;
+    end;
+  end;
+end;
+
+procedure TfrmLogin.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TfrmLogin.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+   perform(WM_NEXTDLGCTL,0,0);
+end;
+
+procedure TfrmLogin.FormShow(Sender: TObject);
+begin
+  ixCont :=0;
+  EdtUsuario.SetFocus;
+end;
+
+end.

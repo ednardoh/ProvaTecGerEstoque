@@ -1,0 +1,25 @@
+unit uEntradasProdutosModel;
+
+interface
+
+uses
+  uEnumerado, FireDAC.Comp.Client;
+
+type
+  TEntradasProdutosModel = class
+    private
+      FAcao: TAcao;
+      FId: Integer;
+      FCodigoBar: string;
+      FDescricao: string;
+      FPrecoCompra: Double;
+      FPrecoVenda: Double;
+      FQtdEstoque: Double;
+    public
+
+
+  end;
+
+implementation
+
+end.

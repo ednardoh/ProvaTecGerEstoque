@@ -1,0 +1,26 @@
+unit uUsuarioControl;
+
+interface
+
+uses
+  uUsuarioModel, System.SysUtils, FireDAC.Comp.Client;
+
+type
+  TUsuarioControl = class
+    private
+      FUsuarioModel: TUsuarioModel;
+    public
+      constructor Create;
+      destructor Destroy; override;
+
+      function Salvar: Boolean;
+      function ObterUsuario(AValorpesquisa: string): TFDQuery;
+      function GetId: Integer;
+
+      property UsuarioModel: TUsuarioModel read FUsuarioModel write FUsuarioModel;
+
+  end;
+
+implementation
+
+end.

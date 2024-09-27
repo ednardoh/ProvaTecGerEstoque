@@ -1,0 +1,21 @@
+unit uProdutoXImagemControl;
+
+interface
+
+uses
+  uProdutoXImagemModel, System.SysUtils, FireDAC.Comp.Client;
+
+type
+  TProdutoXImagemControl = class
+    private
+      FProdutoXImagemModel: TProdutoXImagemModel;
+
+    public
+      constructor Create;
+      destructor Destroy; override;
+
+  end;
+
+implementation
+
+end.

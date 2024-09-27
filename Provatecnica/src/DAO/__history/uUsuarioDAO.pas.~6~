@@ -1,0 +1,70 @@
+unit uUsuarioDAO;
+
+interface
+
+uses
+  FireDAC.Comp.Client, uConexao, uUsuarioModel, System.SysUtils, uSistemaControl;
+
+type
+  TUsuarioDAO = class
+    private
+      FConexao: TConexao;
+    public
+      constructor Create;
+
+      function Incluir(AUsuarioModel: TUsuarioModel): Boolean;
+      function Alterar(AUsuarioModel: TUsuarioModel): Boolean;
+      function Excluir(AUsuarioModel: TUsuarioModel): Boolean;
+      function GetId: Integer;
+      function ObterUsuario(AorderBy: Integer;AValorparcial: string): TFDQuery;
+  end;
+
+implementation
+
+{ TUsuarioDAO }
+
+
+constructor TUsuarioDAO.Create;
+begin
+  FConexao := TSistemaControl.GetInstance().Conexao;
+end;
+
+function TUsuarioDAO.GetId: Integer;
+var
+  vQry: TFDQuery;
+begin
+  vQry := FConexao.CriarQuery();
+  try
+    vQry.Open('SELECT coalesce(MAX(ID),0)+1 AS ID FROM USUARIO');
+    try
+      Result := vQry.Fields[0].AsInteger;
+    finally
+      vQry.Close;
+    end;
+  finally
+    vQry.Free;
+  end;
+end;
+
+function TUsuarioDAO.Incluir(AUsuarioModel: TUsuarioModel): Boolean;
+begin
+
+end;
+
+function TUsuarioDAO.Alterar(AUsuarioModel: TUsuarioModel): Boolean;
+begin
+
+end;
+
+function TUsuarioDAO.Excluir(AUsuarioModel: TUsuarioModel): Boolean;
+begin
+
+end;
+
+function TUsuarioDAO.ObterUsuario(AorderBy: Integer;
+  AValorparcial: string): TFDQuery;
+begin
+
+end;
+
+end.

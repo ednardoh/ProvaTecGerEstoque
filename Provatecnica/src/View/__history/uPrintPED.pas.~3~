@@ -1,0 +1,25 @@
+unit uPrintPED;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls;
+
+type
+  Tfrm_PrintPED = class(TForm)
+    Panel1: TPanel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_PrintPED: Tfrm_PrintPED;
+
+implementation
+
+{$R *.dfm}
+
+end.

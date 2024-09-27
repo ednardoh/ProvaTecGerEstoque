@@ -1,0 +1,29 @@
+unit uProdutoXImagemDAO;
+
+interface
+
+uses
+  FireDAC.Comp.Client, uConexao, uProdutoXImagemModel, System.SysUtils, uSistemaControl;
+
+type
+  TProdutoXImagemDAO = class
+  private
+    FConexao: TConexao;
+  public
+    constructor Create;
+
+    function Incluir(AClienteModel: TProdutoXImagemModel): Boolean;
+    function Alterar(AClienteModel: TProdutoXImagemModel): Boolean;
+    function Excluir(AClienteModel: TProdutoXImagemModel): Boolean;
+    function Obter(AorderBy: Integer;AValorparcial: string): TFDQuery;
+
+  end;
+
+implementation
+
+constructor TProdutoXImagemDAO.Create;
+begin
+  FConexao := TSistemaControl.GetInstance().Conexao;
+end;
+
+end.

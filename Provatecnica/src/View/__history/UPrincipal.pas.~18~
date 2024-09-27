@@ -1,0 +1,129 @@
+unit UPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.Client, Vcl.ExtCtrls,
+  Vcl.Buttons, FireDAC.Comp.DataSet, Vcl.Imaging.pngimage, Vcl.Imaging.jpeg;
+
+type
+  TfrmPrincipal = class(TForm)
+    MainMenu_Principal: TMainMenu;
+    Vendas1: TMenuItem;
+    PDV1: TMenuItem;
+    ControlBar1: TControlBar;
+    btn_Pedvenda: TSpeedButton;
+    Sair1: TMenuItem;
+    Cadastros1: TMenuItem;
+    Clientes1: TMenuItem;
+    N1: TMenuItem;
+    Produtos1: TMenuItem;
+    btn_Clientes: TSpeedButton;
+    btn_Produtos: TSpeedButton;
+    pn_Statusbar: TPanel;
+    pn_empresa: TPanel;
+    pn_data: TPanel;
+    pn_Mensagem: TPanel;
+    procedure Exit1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
+    procedure btn_PedvendaClick(Sender: TObject);
+    procedure PDV1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure btn_ClientesClick(Sender: TObject);
+    procedure btn_ProdutosClick(Sender: TObject);
+    procedure Clientes1Click(Sender: TObject);
+    procedure Produtos1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    LCodigo,
+    LNome,
+    LPrcProd : string;
+
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+implementation
+
+
+{$R *.dfm}
+
+uses UPedidoDeVenda, UConexaoBDpas, uCadClientes, uCadProdutos;
+
+procedure TfrmPrincipal.btn_ClientesClick(Sender: TObject);
+begin
+  frmCad_Clientes := TfrmCad_Clientes.create(Self);
+  frmCad_Clientes.showmodal;
+end;
+
+procedure TfrmPrincipal.btn_PedvendaClick(Sender: TObject);
+begin
+  if frmMov_PEDVendas = Nil then
+    begin
+      frmMov_PEDVendas := TfrmMov_PEDVendas.create(Self);
+      frmMov_PEDVendas.Show;
+    end
+  else
+    frmMov_PEDVendas.show;
+end;
+
+procedure TfrmPrincipal.btn_ProdutosClick(Sender: TObject);
+begin
+  frmCadProdutos := TfrmCadProdutos.create(Self);
+  frmCadProdutos.Showmodal;
+end;
+
+procedure TfrmPrincipal.Clientes1Click(Sender: TObject);
+begin
+  btn_ClientesClick(Self);
+end;
+
+procedure TfrmPrincipal.Exit1Click(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if Application.messageBox('Deseja Realmente sair do Sistema?','Confirmação',mb_YesNo+mb_IconInformation+mb_DefButton2) = IdYes then
+    begin
+      Application.Terminate;
+    end;
+end;
+
+procedure TfrmPrincipal.FormCreate(Sender: TObject);
+begin
+  if not FileExists(pchar(ExtractFilePath(Application.ExeName) + 'ConfigDB.ini')) then
+    begin
+      frmConectaDB := TfrmConectaDB.create(Self);
+      frmConectaDB.Showmodal;
+      close;
+    end;
+end;
+
+procedure TfrmPrincipal.FormShow(Sender: TObject);
+begin
+  pn_empresa.Caption  := ' Empresa : Prova Tecnica ';
+  pn_data.Caption     := 'Data : ' + FormatDateTime('DD/MM/YYYY',Now);
+  pn_Mensagem.Caption := 'Sistema de Pedido de Venda - Teste  ';
+end;
+
+procedure TfrmPrincipal.PDV1Click(Sender: TObject);
+begin
+  btn_PedvendaClick(Self);
+end;
+
+procedure TfrmPrincipal.Produtos1Click(Sender: TObject);
+begin
+  btn_ProdutosClick(Self);
+end;
+
+end.

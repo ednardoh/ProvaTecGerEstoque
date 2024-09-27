@@ -1,0 +1,10 @@
+unit uUsuarioControl;
+
+interface
+
+uses
+  uUsuarioModel, System.SysUtils, FireDAC.Comp.Client;
+
+implementation
+
+end.

@@ -1,0 +1,19 @@
+unit uUsuarioDAO;
+
+interface
+
+uses
+  FireDAC.Comp.Client, uConexao, uUsuarioModel, System.SysUtils, uSistemaControl;
+
+type
+  TUsuarioDAO = class
+    private
+
+    public
+
+
+  end;
+
+implementation
+
+end.

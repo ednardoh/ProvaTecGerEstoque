@@ -1,0 +1,27 @@
+unit uEntradasProdutosControl;
+
+interface
+
+uses
+  uEntradasProdutosModel, System.SysUtils, FireDAC.Comp.Client;
+
+type
+  TEntradasProdutosControl = class
+    private
+      FEntradasProdutosModel: TEntradasProdutosModel;
+
+    public
+      constructor Create;
+      destructor Destroy; override;
+
+      function Salvar: Boolean;
+      function Obter(AValorpesquisa: string): TFDQuery;
+      function GetId: Integer;
+
+      property EntradasProdutosModel: TEntradasProdutosModel read FEntradasProdutosModel write FEntradasProdutosModel;
+
+  end;
+
+implementation
+
+end.

@@ -1,0 +1,10 @@
+unit uProdutoXImagemControl;
+
+interface
+
+uses
+  uProdutoXImagemModel, System.SysUtils, FireDAC.Comp.Client;
+
+implementation
+
+end.

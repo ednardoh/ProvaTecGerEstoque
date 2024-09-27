@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2024/06/15 22:29:24.464,=C:\Sistemas\MB-Data\Provatecnica\src\GerenciaEstoqueTest\TestuClienteControl.pas</Transaction>
+    <Transaction>2024/06/15 22:29:24.807,=C:\Sistemas\MB-Data\Provatecnica\src\Controller\uClienteControl.pas</Transaction>
+    <Transaction>2024/06/15 22:37:10.698,=C:\Sistemas\MB-Data\Provatecnica\src\Model\uEnumerado.pas</Transaction>
+    <Transaction>2024/06/15 22:39:44.095,=C:\Sistemas\MB-Data\Provatecnica\src\DAO\uClienteDAO.pas</Transaction>
+    <Transaction>2024/06/15 22:40:31.454,=C:\Sistemas\MB-Data\Provatecnica\src\Conexao\uConexao.pas</Transaction>
+    <Transaction>2024/06/15 22:41:14.549,=C:\Sistemas\MB-Data\Provatecnica\src\Conexao\UConecta.pas</Transaction>
+    <Transaction>2024/06/15 22:41:53.254,=C:\Sistemas\MB-Data\Provatecnica\src\Controller\uSistemaControl.pas</Transaction>
+    <Transaction>2024/06/16 02:06:41.551,=C:\Sistemas\MB-Data\Provatecnica\src\GerenciaEstoqueTest\TestuProdutoControl.pas</Transaction>
+    <Transaction>2024/06/16 02:06:41.644,=C:\Sistemas\MB-Data\Provatecnica\src\Controller\uProdutoControl.pas</Transaction>
+    <Transaction>2024/06/16 02:08:56.115,=C:\Sistemas\MB-Data\Provatecnica\src\Model\uProdutoModel.pas</Transaction>
+    <Transaction>2024/06/16 02:09:18.287,=C:\Sistemas\MB-Data\Provatecnica\src\DAO\uProdutoDAO.pas</Transaction>
+    <Transaction>2024/06/16 02:50:26.921,=C:\Sistemas\MB-Data\Provatecnica\src\GerenciaEstoqueTest\TestuEntradasProdutosControl.pas</Transaction>
+    <Transaction>2024/06/16 02:50:27.019,=C:\Sistemas\MB-Data\Provatecnica\src\Controller\uEntradasProdutosControl.pas</Transaction>
+    <Transaction>2024/06/16 02:53:29.616,=C:\Sistemas\MB-Data\Provatecnica\src\Model\uEntradasProdutosModel.pas</Transaction>
+    <Transaction>2024/06/16 02:53:47.924,=C:\Sistemas\MB-Data\Provatecnica\src\DAO\uEntradasProdutosDAO.pas</Transaction>
+    <Transaction>2024/06/16 03:08:07.722,=C:\Sistemas\MB-Data\Provatecnica\src\GerenciaEstoqueTest\TestuPedidovendaControl.pas</Transaction>
+    <Transaction>2024/06/16 03:08:07.801,=C:\Sistemas\MB-Data\Provatecnica\src\Controller\uPedidovendaControl.pas</Transaction>
+    <Transaction>2024/06/16 03:10:14.117,=C:\Sistemas\MB-Data\Provatecnica\src\Model\uPedidovendaModel.pas</Transaction>
+    <Transaction>2024/06/16 03:10:33.944,=C:\Sistemas\MB-Data\Provatecnica\src\DAO\uPedidovendaDAO.pas</Transaction>
+  </Transactions>
+</BorlandProject>

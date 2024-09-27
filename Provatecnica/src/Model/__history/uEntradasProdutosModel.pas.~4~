@@ -1,0 +1,33 @@
+unit uEntradasProdutosModel;
+
+interface
+
+uses
+  uEnumerado, FireDAC.Comp.Client;
+
+type
+  TEntradasProdutosModel = class
+    private
+      FAcao: TAcao;
+      FId: Integer;
+      FCodigoBar: string;
+      FDescricao: string;
+      FPrecoCompra: Double;
+      FPrecoVenda: Double;
+      FQtdEstoque: Double;
+
+      procedure SetAcao(const Value: TAcao);
+      procedure SetId(const Value: Integer);
+      procedure SetCodigoBar(const Value: string);
+      procedure SetDescricao(const Value: string);
+      procedure SetPrecoCompra(const Value: Double);
+      procedure SetPrecoVenda(const Value: Double);
+      procedure SetQtdEstoque(const Value: Double);
+    public
+
+
+  end;
+
+implementation
+
+end.

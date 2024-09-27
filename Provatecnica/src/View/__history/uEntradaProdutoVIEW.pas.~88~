@@ -1,0 +1,365 @@
+unit uEntradaProdutoVIEW;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, VCLTee.TeCanvas,
+  VCLTee.TeeEdiGrad, Vcl.DBCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids,
+  Datasnap.Provider, Datasnap.DBClient, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Phys.IBBase, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, uEntradasProdutosControl, uProdutoControl, uEnumerado,
+  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  cxDataControllerConditionalFormattingRulesManagerDialog, cxDBData, dxPSGlbl,
+  dxPSUtl, dxPSEngn, dxPrnPg, dxBkgnd, dxWrap, dxPrnDev, dxPSCompsProvider,
+  dxPSFillPatterns, dxPSEdgePatterns, dxPSPDFExportCore, dxPSPDFExport,
+  cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
+  dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
+  dxPScxEditorProducers, dxPScxExtEditorProducers, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxClasses, dxPSCore, cxGridLevel,
+  cxGridCustomView, cxGrid, dxPScxCommon, Vcl.Menus, cxButtons;
+
+type
+  TfrmEntradaProduto = class(TForm)
+    pn_EntradaProduto: TPanel;
+    Panel1: TPanel;
+    pn_Grid: TPanel;
+    pn_Controls: TPanel;
+    Shape1: TShape;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label7: TLabel;
+    Shape2: TShape;
+    Label11: TLabel;
+    DBButtons: TDBNavigator;
+    ds_EntradaProduto: TDataSource;
+    TB_EntradaProduto: TClientDataSet;
+    DSP_EntradaProduto: TDataSetProvider;
+    Edt_IDProduto: TEdit;
+    Edt_CodBarra: TEdit;
+    Edt_DescrProduto: TEdit;
+    Edt_QtdeEntrada: TEdit;
+    Edt_ValUnitCompra: TEdit;
+    Edt_ValorTotal: TEdit;
+    TB_EntradaProdutoID: TIntegerField;
+    TB_EntradaProdutoID_PRODUTO: TIntegerField;
+    TB_EntradaProdutoCODIGO_BAR: TStringField;
+    TB_EntradaProdutoDESCRICAOPRODUTO: TStringField;
+    TB_EntradaProdutoQUANTIDADE_ENTRADA: TSingleField;
+    TB_EntradaProdutoVALOR_UNITARIO_COMPRA: TSingleField;
+    TB_EntradaProdutoVALOR_TOTAL: TSingleField;
+    grd_EntProd: TcxGrid;
+    grd_EntProdDBTableView1: TcxGridDBTableView;
+    grd_EntProdLevel1: TcxGridLevel;
+    dxComponentPrinter1: TdxComponentPrinter;
+    grd_ClientesCODIGO_BAR: TcxGridDBColumn;
+    grd_ClientesDESCRICAOPRODUTO: TcxGridDBColumn;
+    grd_ClientesID_PRODUTO: TcxGridDBColumn;
+    grd_ClientesQUANTIDADE_ENTRADA: TcxGridDBColumn;
+    grd_ClientesVALOR_UNITARIO_COMPRA: TcxGridDBColumn;
+    grd_ClientesVALOR_TOTAL: TcxGridDBColumn;
+    PrnEntProd: TdxComponentPrinter;
+    PrnEntProdLink1: TdxGridReportLink;
+    cxButton1: TcxButton;
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormCreate(Sender: TObject);
+    procedure PintaEdit(Sender: TObject);
+    procedure Edt_QtdeEntradaKeyPress(Sender: TObject; var Key: Char);
+    procedure Edt_ValUnitCompraKeyPress(Sender: TObject; var Key: Char);
+    procedure Edt_ValorTotalKeyPress(Sender: TObject; var Key: Char);
+    procedure LimpaCampos;
+    procedure PreencheCampos;
+    procedure TB_EntradaProdutoBeforeInsert(DataSet: TDataSet);
+    procedure TB_EntradaProdutoBeforeEdit(DataSet: TDataSet);
+    procedure DBG_ClientesCellClick(Column: TColumn);
+    procedure TB_EntradaProdutoBeforePost(DataSet: TDataSet);
+    procedure TB_EntradaProdutoBeforeDelete(DataSet: TDataSet);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
+    procedure Edt_IDProdutoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure Edt_ValUnitCompraExit(Sender: TObject);
+    procedure Edt_QtdeEntradaExit(Sender: TObject);
+    procedure Edt_ValorTotalExit(Sender: TObject);
+    procedure cxButton1Click(Sender: TObject);
+  private
+    { Private declarations }
+    Produtos: TEntradasProdutosControl;
+    ProdEst: TProdutoControl;
+    ATipo: TAcao;
+    procedure PreencheDatasetProdutos;
+    procedure ConsultaProdutos;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmEntradaProduto: TfrmEntradaProduto;
+
+implementation
+
+{$R *.dfm}
+
+uses uPesquisaVIEW, UPrincipalVIEW;
+
+procedure TfrmEntradaProduto.ConsultaProdutos;
+begin
+  if TB_EntradaProduto.State in [dsInsert, dsEdit] then
+  begin
+    FrmPesquisa := TFrmPesquisa.Create(Self);
+    FrmPesquisa.gblNomeTabela :='Produtos';
+    FrmPesquisa.ShowModal;
+    Edt_IDProduto.Text    := frmPrincipal.LCodigo;
+    Edt_CodBarra.Text     := frmPrincipal.LCodBarra;
+    EDT_DescrProduto.Text := frmPrincipal.LNome;
+  end
+  else
+  begin
+    Showmessage('Só poderá consultar Produtos se estiver em modo de Inserção/Edição.');
+    Edt_IDProduto.SetFocus;
+  end;
+end;
+
+procedure TfrmEntradaProduto.cxButton1Click(Sender: TObject);
+begin
+  PrnEntProd.Preview(true);
+end;
+
+procedure TfrmEntradaProduto.DBG_ClientesCellClick(Column: TColumn);
+begin
+  PreencheCampos;
+end;
+
+procedure TfrmEntradaProduto.Edt_IDProdutoKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if key = VK_F4 then
+    ConsultaProdutos
+end;
+
+procedure TfrmEntradaProduto.Edt_QtdeEntradaExit(Sender: TObject);
+begin
+  if TB_EntradaProduto.State in [dsInsert, dsEdit] then
+    Edt_QtdeEntrada.Text := FloatTostr(strToFloat(Edt_QtdeEntrada.Text));
+end;
+
+procedure TfrmEntradaProduto.Edt_QtdeEntradaKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  If not( key in['0'..'9',#08,#13,#44] ) then
+    key:=#0;
+end;
+
+procedure TfrmEntradaProduto.Edt_ValorTotalExit(Sender: TObject);
+begin
+  if TB_EntradaProduto.State in [dsInsert, dsEdit] then
+    TB_EntradaProduto.post;
+end;
+
+procedure TfrmEntradaProduto.Edt_ValorTotalKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  If not( key in['0'..'9',#08,#13,#44] ) then
+    key:=#0;
+end;
+
+procedure TfrmEntradaProduto.Edt_ValUnitCompraExit(Sender: TObject);
+begin
+  if TB_EntradaProduto.State in [dsInsert, dsEdit] then
+    begin
+      Edt_ValUnitCompra.Text := FloatTostr(strToFloat(Edt_ValUnitCompra.Text));
+      Edt_ValorTotal.Text := FloatTostr(StrToFloat(Edt_QtdeEntrada.Text) * strToFloat(Edt_ValUnitCompra.Text));
+    end;
+end;
+
+procedure TfrmEntradaProduto.Edt_ValUnitCompraKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  If not( key in['0'..'9',#08,#13,#44] ) then
+    key:=#0;
+end;
+
+procedure TfrmEntradaProduto.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action := cafree;
+end;
+
+procedure TfrmEntradaProduto.FormCreate(Sender: TObject);
+var nI: Integer;
+begin
+  For nI := 0 to ComponentCount-1 do
+  begin
+    if Components[nI] is TEdit  then
+      (Components[nI] as TEdit).OnEnter := PintaEdit
+    else
+      if Components[nI] is TDBEdit then
+        (Components[nI] as TDBEdit).OnEnter := PintaEdit;
+  end;
+  PreencheDatasetProdutos;
+end;
+
+procedure TfrmEntradaProduto.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = VK_ESCAPE then
+    close;
+  if Key = VK_RETURN then
+   perform(WM_NEXTDLGCTL,0,0);
+end;
+
+procedure TfrmEntradaProduto.FormShow(Sender: TObject);
+begin
+  Edt_IDProduto.SetFocus;
+end;
+
+procedure TfrmEntradaProduto.LimpaCampos;
+begin
+  Edt_IDProduto.Clear;
+  Edt_CodBarra.Clear;
+  Edt_DescrProduto.Clear;
+  Edt_QtdeEntrada.Clear;
+  Edt_ValUnitCompra.Clear;
+  Edt_ValorTotal.Clear;
+  Edt_QtdeEntrada.Text :='0,00';
+  Edt_ValUnitCompra.Text :='0,00';
+  Edt_ValorTotal.Text :='0,00';
+end;
+
+procedure TfrmEntradaProduto.PintaEdit(Sender: TObject);
+var nI: Integer;
+begin
+  For nI := 0 to ComponentCount-1 do
+  begin
+    if (Components[nI] is TEdit) then
+    begin
+    if TEdit(Components[nI]).Focused then
+      TEdit(Components[nI]).Color := $00D7FFFF
+    else
+      TEdit(Components[nI]).Color := clWhite;
+    end
+    else
+      if (Components[nI] is TDBEdit) then
+      begin
+        if TDBEdit(Components[nI]).Focused then
+          TDBEdit(Components[nI]).Color := $00D7FFFF
+        else
+          TDBEdit(Components[nI]).Color := clWhite;
+      end;
+
+  end;
+end;
+
+procedure TfrmEntradaProduto.PreencheCampos;
+begin
+  TB_EntradaProduto.close;
+  TB_EntradaProduto.Open;
+  Edt_IDProduto.Text     := TB_EntradaProdutoID_PRODUTO.AsString;
+  Edt_CodBarra.Text      := TB_EntradaProdutoCODIGO_BAR.AsString;
+  Edt_DescrProduto.Text  := TB_EntradaProdutoDESCRICAOPRODUTO.AsString;
+  Edt_QtdeEntrada.Text   := TB_EntradaProdutoQUANTIDADE_ENTRADA.AsString;
+  Edt_ValUnitCompra.Text := TB_EntradaProdutoVALOR_UNITARIO_COMPRA.AsString;
+  Edt_ValorTotal.Text    := TB_EntradaProdutoVALOR_TOTAL.AsString;
+end;
+
+procedure TfrmEntradaProduto.PreencheDatasetProdutos;
+begin
+  try
+    Produtos:= TEntradasProdutosControl.Create;
+    DSP_EntradaProduto.DataSet := Produtos.Obter('');
+    TB_EntradaProduto.Open;
+    PreencheCampos;
+  finally
+    Produtos.Free;
+  end;
+end;
+
+procedure TfrmEntradaProduto.TB_EntradaProdutoBeforeDelete(DataSet: TDataSet);
+begin
+  ATipo := uEnumerado.tacExcluir;
+  if MessageDlg('Deseja realmente exluir essa informação ?',mtConfirmation, [mbYes,mbNo],1) = mrYes then
+  begin
+    try
+      Produtos:= TEntradasProdutosControl.Create;
+      Produtos.EntradasProdutosModel.Acao    := ATipo;
+      Produtos.EntradasProdutosModel.Id      := TB_EntradaProdutoID.AsInteger;
+      Produtos.Salvar;
+      ProdEst.MovimentaEstoque(TB_EntradaProdutoQUANTIDADE_ENTRADA.AsFloat,
+                               '-',
+                               TB_EntradaProdutoID_PRODUTO.AsString
+                               );
+    finally
+      messagedlg('Dado Excluido com sucesso!',mtinformation,[mbok],0);
+      Produtos.Free;
+      ProdEst.Free;
+      PreencheDatasetProdutos;
+    end;
+  end;
+end;
+
+procedure TfrmEntradaProduto.TB_EntradaProdutoBeforeEdit(DataSet: TDataSet);
+begin
+  Edt_IDProduto.SetFocus;
+end;
+
+procedure TfrmEntradaProduto.TB_EntradaProdutoBeforeInsert(DataSet: TDataSet);
+begin
+  LimpaCampos;
+  Edt_IDProduto.SetFocus;
+end;
+
+procedure TfrmEntradaProduto.TB_EntradaProdutoBeforePost(DataSet: TDataSet);
+begin
+  if TB_EntradaProduto.State = dsInsert then  //grava no banco as inserções ou alterações
+    begin
+      ATipo := uEnumerado.tacIncluir;
+      try
+        Produtos:= TEntradasProdutosControl.Create;
+        Produtos.EntradasProdutosModel.Acao                := ATipo;
+        TB_EntradaProdutoID.AsInteger                      := Produtos.EntradasProdutosModel.GetId;
+        Produtos.EntradasProdutosModel.Id                  := TB_EntradaProdutoID.AsInteger;
+        Produtos.EntradasProdutosModel.IdProduto           := strToInt(Edt_IDProduto.Text); //gera codigo automático
+        Produtos.EntradasProdutosModel.QuantidadeEntrada   := StrToFloat(Edt_QtdeEntrada.Text);
+        Produtos.EntradasProdutosModel.ValorUnitarioCompra := StrToFloat(Edt_ValUnitCompra.Text);
+        Produtos.EntradasProdutosModel.ValorTotal          := (StrToFloat(Edt_QtdeEntrada.Text)*strToFloat(Edt_ValUnitCompra.Text));
+        Produtos.Salvar;
+        ProdEst := TProdutoControl.Create;
+        ProdEst.MovimentaEstoque(Produtos.EntradasProdutosModel.QuantidadeEntrada,
+                                 '+',
+                                 IntToStr(Produtos.EntradasProdutosModel.IdProduto)
+                                 );
+      finally
+        messagedlg('Dados gravados com sucesso!',mtinformation,[mbok],0);
+        Produtos.Free;
+        ProdEst.Free;
+        PreencheDatasetProdutos;
+      end;
+    end
+    else
+    if TB_EntradaProduto.State = dsEdit then
+    begin
+      ATipo := uEnumerado.tacAlterar;
+      try
+        Produtos:= TEntradasProdutosControl.Create;
+        Produtos.EntradasProdutosModel.Acao                := ATipo;
+        Produtos.EntradasProdutosModel.Id                  := TB_EntradaProdutoID.AsInteger;
+        Produtos.EntradasProdutosModel.IdProduto           := strToInt(Edt_IDProduto.Text); //gera codigo automático
+        Produtos.EntradasProdutosModel.QuantidadeEntrada   := StrToFloat(Edt_QtdeEntrada.Text);
+        Produtos.EntradasProdutosModel.ValorUnitarioCompra := StrToFloat(Edt_ValUnitCompra.Text);
+        Produtos.Salvar;
+      finally
+        messagedlg('Dados gravados com sucesso!',mtinformation,[mbok],0);
+        Produtos.Free;
+        PreencheDatasetProdutos;
+      end;
+    end;
+  Abort;
+end;
+
+end.

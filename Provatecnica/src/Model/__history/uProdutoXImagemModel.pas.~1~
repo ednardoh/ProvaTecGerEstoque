@@ -1,0 +1,29 @@
+unit uProdutoXImagemModel;
+
+interface
+
+uses
+  uEnumerado, FireDAC.Comp.Client;
+
+type
+  TProdutoXImagem = class
+  private
+    FAcao: TAcao;
+    FIDProduto: integer;
+    FPATHImagem: string;
+
+    procedure SetAcao(const Value: TAcao);
+    procedure SetIDProduto(const Value: integer);
+    procedure SetPATHImagem(const Value: string);
+  public
+    function Obter(AorderBy: Integer;AValorparcial: string): TFDQuery;
+    function Salvar: Boolean;
+
+    property Acao: TAcao read FAcao write SetAcao;
+    property IDProduto: integer read FIDProduto write SetIDProduto;
+    property PATHImagem: string read FPATHImagem write SetPATHImagem;
+  end;
+
+implementation
+
+end.

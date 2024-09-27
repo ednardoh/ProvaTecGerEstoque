@@ -1,0 +1,24 @@
+unit uProdutoXImagem;
+
+interface
+
+uses
+  uEnumerado, FireDAC.Comp.Client;
+
+type
+  TProdutoXImagem = class
+    private
+      FAcao: TAcao;
+      FIDProduto: integer;
+      FPATHImagem: string;
+    public
+      procedure SetAcao(const Value: TAcao);
+      procedure SetIDProduto(const Value: integer);
+      procedure SetPATHImagem(const Value: string);
+
+
+  end;
+
+implementation
+
+end.

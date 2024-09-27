@@ -1,0 +1,81 @@
+unit uUsuarioModel;
+
+interface
+
+uses
+  uEnumerado, FireDAC.Comp.Client;
+
+type
+  TUsuarioModel = class
+    private
+      FAcao: TAcao;
+      FID:           Integer;
+      FNOMEUSUARIO:  string;
+      FSENHA:        string;
+
+      procedure SetAcao(const Value: TAcao);
+      procedure SetID(const Value: Integer);
+      procedure SetNOMEUSUARIO(const Value: string);
+      procedure SetSENHA(const Value: string);
+
+    public
+      function Obter(AorderBy: Integer;AValorparcial: string): TFDQuery;
+      function Salvar: Boolean;
+      function GetId: Integer;
+      function ObterUsuario(AValorpesquisa: string): TFDQuery;
+
+      property Acao: TAcao         read FAcao        write SetAcao;
+      property ID: Integer         read FID          write SetID;
+      property NOMEUSUARIO: string read FNOMEUSUARIO write SetNOMEUSUARIO;
+      property SENHA: string       read FSENHA       write SetSENHA;
+
+  end;
+
+implementation
+
+Uses uUsuarioDAO;
+
+{ TUsuarioModel }
+
+function TUsuarioModel.GetId: Integer;
+begin
+
+end;
+
+function TUsuarioModel.Obter(AorderBy: Integer;
+  AValorparcial: string): TFDQuery;
+begin
+
+end;
+
+function TUsuarioModel.ObterUsuario(AValorpesquisa: string): TFDQuery;
+begin
+
+end;
+
+function TUsuarioModel.Salvar: Boolean;
+begin
+
+end;
+
+procedure TUsuarioModel.SetAcao(const Value: TAcao);
+begin
+
+end;
+
+procedure TUsuarioModel.SetID(const Value: Integer);
+begin
+
+end;
+
+procedure TUsuarioModel.SetNOMEUSUARIO(const Value: string);
+begin
+
+end;
+
+procedure TUsuarioModel.SetSENHA(const Value: string);
+begin
+
+end;
+
+end.

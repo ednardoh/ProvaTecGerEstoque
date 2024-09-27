@@ -1,0 +1,10 @@
+unit uEntradasProdutosControl;
+
+interface
+
+uses
+  uEntradasProdutosModel, System.SysUtils, FireDAC.Comp.Client;
+
+implementation
+
+end.

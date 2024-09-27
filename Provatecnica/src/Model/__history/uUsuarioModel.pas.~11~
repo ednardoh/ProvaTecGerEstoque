@@ -1,0 +1,101 @@
+unit uUsuarioModel;
+
+interface
+
+uses
+  uEnumerado, FireDAC.Comp.Client;
+
+type
+  TUsuarioModel = class
+    private
+      FAcao: TAcao;
+      FID:           Integer;
+      FNOMEUSUARIO:  string;
+      FSENHA:        string;
+
+      procedure SetAcao(const Value: TAcao);
+      procedure SetID(const Value: Integer);
+      procedure SetNOMEUSUARIO(const Value: string);
+      procedure SetSENHA(const Value: string);
+
+    public
+      function Salvar: Boolean;
+      function GetId: Integer;
+      function ObterUsuario(AValorpesquisa: string): TFDQuery;
+
+      property Acao: TAcao         read FAcao        write SetAcao;
+      property ID: Integer         read FID          write SetID;
+      property NOMEUSUARIO: string read FNOMEUSUARIO write SetNOMEUSUARIO;
+      property SENHA: string       read FSENHA       write SetSENHA;
+
+  end;
+
+implementation
+
+Uses uUsuarioDAO;
+
+{ TUsuarioModel }
+
+function TUsuarioModel.GetId: Integer;
+var
+  vUsuarioDAO: TUsuarioDAO;
+begin
+  vUsuarioDAO := TUsuarioDAO.Create;
+  try
+    Result := vUsuarioDAO.GetId;
+  finally
+    vUsuarioDAO.Free;
+  end;
+end;
+
+function TUsuarioModel.ObterUsuario(AValorpesquisa: string): TFDQuery;
+var
+  vUsuarioDAO: TUsuarioDAO;
+begin
+  vUsuarioDAO := TUsuarioDAO.Create;
+  try
+    Result := vUsuarioDAO.ObterUsuario(AValorpesquisa);
+  finally
+    vUsuarioDAO.Free;
+  end;
+end;
+
+function TUsuarioModel.Salvar: Boolean;
+var
+  vUsuarioDAO: TUsuarioDAO;
+begin
+  Result := False;
+
+  vUsuarioDAO := TUsuarioDAO.Create;
+  try
+    case FAcao of
+      uEnumerado.tacIncluir: Result := vUsuarioDAO.Incluir(Self);
+      uEnumerado.tacAlterar: Result := vUsuarioDAO.Alterar(Self);
+      uEnumerado.tacExcluir: Result := vUsuarioDAO.Excluir(Self);
+    end;
+  finally
+    vUsuarioDAO.Free;
+  end;
+end;
+
+procedure TUsuarioModel.SetAcao(const Value: TAcao);
+begin
+  FAcao := Value;
+end;
+
+procedure TUsuarioModel.SetID(const Value: Integer);
+begin
+  FID := Value;
+end;
+
+procedure TUsuarioModel.SetNOMEUSUARIO(const Value: string);
+begin
+  FNOMEUSUARIO := Value;
+end;
+
+procedure TUsuarioModel.SetSENHA(const Value: string);
+begin
+  FSENHA := Value;
+end;
+
+end.

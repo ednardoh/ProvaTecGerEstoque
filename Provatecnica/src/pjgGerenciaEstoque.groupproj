@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{F330CEE1-C8A9-4CE4-93BE-4CDA85107D4D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="GerenciaEstoque.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="GerenciaEstoqueTest\GerenciaEstoqueTests.dproj">
+            <Dependencies>GerenciaEstoque.dproj</Dependencies>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="GerenciaEstoque">
+        <MSBuild Projects="GerenciaEstoque.dproj"/>
+    </Target>
+    <Target Name="GerenciaEstoque:Clean">
+        <MSBuild Projects="GerenciaEstoque.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GerenciaEstoque:Make">
+        <MSBuild Projects="GerenciaEstoque.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GerenciaEstoqueTests" DependsOnTargets="GerenciaEstoque">
+        <MSBuild Projects="GerenciaEstoqueTest\GerenciaEstoqueTests.dproj"/>
+    </Target>
+    <Target Name="GerenciaEstoqueTests:Clean" DependsOnTargets="GerenciaEstoque:Clean">
+        <MSBuild Projects="GerenciaEstoqueTest\GerenciaEstoqueTests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GerenciaEstoqueTests:Make" DependsOnTargets="GerenciaEstoque:Make">
+        <MSBuild Projects="GerenciaEstoqueTest\GerenciaEstoqueTests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="GerenciaEstoque;GerenciaEstoqueTests"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="GerenciaEstoque:Clean;GerenciaEstoqueTests:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="GerenciaEstoque:Make;GerenciaEstoqueTests:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

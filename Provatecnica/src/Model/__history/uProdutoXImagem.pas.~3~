@@ -1,0 +1,10 @@
+unit uProdutoXImagem;
+
+interface
+
+uses
+  uEnumerado, FireDAC.Comp.Client;
+
+implementation
+
+end.
